@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dynamic Image Gallery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #imageInput {
+      width: 80%;
+      padding: 10px;
+      margin-right: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #addBtn {
+      padding: 10px 15px;
+      border: none;
+      background-color: #28a745;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #addBtn:hover {
+      background-color: #218838;
+    }
+
+    .input-area {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .image-box {
+      position: relative;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background-color: rgba(255, 0, 0, 0.8);
+      color: white;
+      border: none;
+      padding: 5px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Dynamic Image Gallery</h1>
+
+  <div class="input-area">
+    <input type="text" id="imageInput" placeholder="Paste image URL here (e.g. .jpg, .png)" />
+    <button id="addBtn">Add Image</button>
+  </div>
+
+  <div class="gallery" id="gallery"></div>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="Large View" />
+  </div>
+
+  <script>
+    const addBtn = document.getElementById('addBtn');
+    const imageInput = document.getElementById('imageInput');
+    const gallery = document.getElementById('gallery');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    addBtn.addEventListener('click', () => {
+      const url = imageInput.value.trim();
+
+      if (!url) {
+        alert('Please enter an image URL.');
+        return;
+      }
+
+      if (!url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+        alert('Please enter a valid image link ending in .jpg, .png, etc.');
+        return;
+      }
+
+      const img = new Image();
+      img.src = url;
+      img.alt = "Gallery Image";
+      img.onclick = () => showLightbox(url);
+
+      img.onerror = () => {
+        alert('Image could not be loaded. Please check the URL.');
+      };
+
+      img.onload = () => {
+        const box = document.createElement('div');
+        box.className = 'image-box';
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'X';
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.onclick = () => box.remove();
+
+        box.appendChild(img);
+        box.appendChild(deleteBtn);
+        gallery.appendChild(box);
+
+        imageInput.value = '';
+      };
+    });
+
+    function showLightbox(src) {
+      lightboxImg.src = src;
+      lightbox.style.display = 'flex';
+    }
+
+    lightbox.addEventListener('click', () => {
+      lightbox.style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Layout with Cards</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; }
+
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      background-color: #333; color: white; padding: 10px 20px; flex-wrap: wrap;
+    }
+    nav .logo { font-size: 1.5em; }
+    nav .menu { display: flex; gap: 15px; }
+    nav .menu a {
+      color: white; text-decoration: none; padding: 8px; border-radius: 4px;
+    }
+    nav .menu a:hover { background-color: #555; }
+
+    .header-image {
+      width: 100%; max-height: 300px; object-fit: cover;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .main, .sidebar {
+      background-color: #f0f0f0;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px; margin-top: 20px;
+    }
+    .card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 15px;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .container { grid-template-columns: 1fr; }
+      nav { flex-direction: column; align-items: flex-start; }
+      nav .menu { flex-direction: column; width: 100%; }
+      nav .menu a { width: 100%; text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">MySite</div>
+    <div class="menu">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+
+  <img src="https://via.placeholder.com/1200x300.png?text=Banner+Image" alt="Banner" class="header-image">
+
+  <div class="container">
+    <div class="main">
+      <h2>Main Content</h2>
+      <p>This section includes a responsive card layout below.</p>
+
+      <div class="cards">
+        <div class="card"><h3>Card 1</h3><p>Card content goes here.</p></div>
+        <div class="card"><h3>Card 2</h3><p>Another card example.</p></div>
+        <div class="card"><h3>Card 3</h3><p>Cards wrap on smaller screens.</p></div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <h2>Sidebar</h2>
+      <p>This is the sidebar content.</p>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 MySite. All rights reserved.
+  </footer>
+
+</body>
+</html>
