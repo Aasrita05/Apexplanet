@@ -1,0 +1,75 @@
+/* Base Styles - Common to all screen sizes */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 1rem;
+  font-size: 2rem;
+}
+
+main {
+  padding: 2rem;
+  font-size: 18px;
+  max-width: 800px;
+  margin: auto;
+}
+
+/* Responsive Styles */
+
+/* Mobile (max-width: 600px) */
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: #f0f8ff;
+  }
+
+  header {
+    font-size: 1.4rem;
+    padding: 0.75rem;
+  }
+
+  main {
+    font-size: 16px;
+    padding: 1rem;
+  }
+}
+
+/* Tablet (601px to 1024px) */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  body {
+    background-color: #e6f7ff;
+  }
+
+  header {
+    font-size: 1.6rem;
+    padding: 1rem;
+  }
+
+  main {
+    font-size: 17px;
+    padding: 2rem;
+  }
+}
+
+/* Desktop (min-width: 1025px) */
+@media only screen and (min-width: 1025px) {
+  body {
+    background-color: #ffffff;
+  }
+
+  header {
+    font-size: 2rem;
+    padding: 1.5rem;
+  }
+
+  main {
+    font-size: 18px;
+    padding: 3rem;
+  }
+}

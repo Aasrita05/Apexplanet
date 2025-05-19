@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🧠 Interactive Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      padding: 50px;
+      text-align: center;
+    }
+
+    .quiz-container {
+      background-color: #ffffff;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .option {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      width: 80%;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .option:hover {
+      background-color: #2980b9;
+    }
+
+    #result {
+      font-size: 1.2rem;
+      margin-top: 20px;
+    }
+
+    #next-btn {
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 1rem;
+      background-color: #2ecc71;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      display: none;
+    }
+
+    #next-btn:hover {
+      background-color: #27ae60;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container">
+    <h2 id="question">Question text</h2>
+    <div id="options"></div>
+    <div id="result"></div>
+    <button id="next-btn" onclick="nextQuestion()">Next Question</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Which Indian city is known as the 'Silicon Valley of India'?",
+        options: ["Mumbai", "Hyderabad", "Bangalore", "Pune"],
+        answer: "Bangalore"
+      },
+      {
+        question: "Who wrote the Indian National Anthem?",
+        options: ["Mahatma Gandhi", "Rabindranath Tagore", "Sarojini Naidu", "Subhash Chandra Bose"],
+        answer: "Rabindranath Tagore"
+      },
+      {
+        question: "Which Indian cricketer is known as 'Master Blaster'?",
+        options: ["Virat Kohli", "Kapil Dev", "MS Dhoni", "Sachin Tendulkar"],
+        answer: "Sachin Tendulkar"
+      },
+      {
+        question: "Where is the Sun Temple located?",
+        options: ["Odisha", "Tamil Nadu", "Rajasthan", "Gujarat"],
+        answer: "Odisha"
+      }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+
+    function showQuestion() {
+      const current = questions[currentIndex];
+      document.getElementById("question").textContent = current.question;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+      document.getElementById("result").textContent = "";
+      document.getElementById("next-btn").style.display = "none";
+
+      current.options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.textContent = option;
+        btn.className = "option";
+        btn.onclick = () => checkAnswer(option);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected) {
+      const correct = questions[currentIndex].answer;
+      const result = document.getElementById("result");
+
+      if (selected === correct) {
+        result.textContent = "✅ Correct!";
+        result.style.color = "green";
+        score++;
+      } else {
+        result.textContent = `❌ Wrong! Correct answer is: ${correct}`;
+        result.style.color = "red";
+      }
+
+      document.querySelectorAll(".option").forEach(btn => {
+        btn.disabled = true;
+      });
+
+      document.getElementById("next-btn").style.display = "inline-block";
+    }
+
+    function nextQuestion() {
+      currentIndex++;
+      if (currentIndex < questions.length) {
+        showQuestion();
+      } else {
+        document.querySelector(".quiz-container").innerHTML = `
+          <h2>🎉 Quiz Complete!</h2>
+          <p>Your Score: ${score} out of ${questions.length}</p>
+          <button onclick="location.reload()" class="option">Play Again</button>
+        `;
+      }
+    }
+
+    // Load first question
+    showQuestion();
+  </script>
+
+</body>
+</html>
